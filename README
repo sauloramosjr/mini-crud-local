@@ -4,5 +4,7 @@ Para rodar o projeto pode-se utilisar IIS,apache,node
 
 Está incluso no projeto um pacote "http-server" para utilizar com Nodejs
 
-Com o NodeJs instalado, basta apenas rodar o comando ```npm start```
+instale a dependencia com ```npm install```
+
+Com as dependencias instaladas, basta apenas rodar o comando ```npm start```
 
