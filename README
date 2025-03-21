@@ -4,5 +4,14 @@ Para rodar o projeto pode-se utilisar IIS,apache,node
 
 Está incluso no projeto um pacote "http-server" para utilizar com Nodejs
 
-Com o NodeJs instalado, basta apenas rodar o comando ```npm start```
+instale a dependencia com ```npm install```
 
+Com as dependencias instaladas, basta apenas rodar o comando ```npm start```
+Então estará rodando em http://localhost:8001
+
+Na tela Inicial (login) existe um botão no canto superior do card com um icone de engrenagem, nele é possível importar um banco de dados de formato .json
+A pasta "seeds" contém um banco de dados pronto para teste.
+
+faça um cadastro de usuário antes de logar.
+
+Na tela interna ao login tem um botão na parte superior da tela ao centro que é para exportar o banco atual.
