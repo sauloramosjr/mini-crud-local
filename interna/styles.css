@@ -1,0 +1,131 @@
+:root {
+  --azul-background: #c7d2ff;
+}
+
+html {
+  box-sizing: content-box;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+main {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+table {
+  width:100%;
+
+}
+th {
+  white-space: nowrap;
+  width: max-content;
+}
+td {
+  white-space: nowrap;
+  width: max-content;
+}
+tr {
+  /* display: grid;
+  grid-template-rows: 0fr; */
+  &:hover {
+    background: var(--azul-background);
+  }
+  &:nth-child(2n) {
+    background: silver;
+  }
+}
+
+#modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.687);
+  display: none;
+  opacity: 0;
+  justify-content: center;
+  /* align-items: center; */
+  z-index: 100;
+  transition: all 0.5s ease-in-out;
+  /* overflow-y: scroll; */
+}
+.form-control {
+  width: 100%;
+}
+.card-body {
+  overflow-y: auto;
+}
+#modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.form-control {
+  width: 100%;
+}
+
+#closeButon {
+  padding: 5px;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 5px;
+  right: 5px;
+  color: rgb(227, 237, 254);
+  background: grey;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+  span {
+    font-size: 18px;
+  }
+}
+
+#client-card {
+  width: 500px;
+}
+#enderecos {
+}
+
+#wrap {
+  display: flex;
+  border: 1px solid silver;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px;
+  flex: 1;
+  padding: 5px;
+  div {
+    min-width: 200px;
+    @media screen and (max-width: 800px) {
+      min-width: 100%;
+    }
+  }
+}
+
+.mb-1 {
+  @media screen and (max-width: 800px) {
+    min-width: 100%;
+  }
+}
+.d-flex.gap-3 {
+  @media screen and (max-width: 800px) {
+    min-width: 100%;
+    flex-direction: column;
+  }
+}
+
+
+.showAppend{
+  
+}

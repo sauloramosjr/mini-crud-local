@@ -1,0 +1,8 @@
+Mini projeto de Crud com banco local
+
+Para rodar o projeto pode-se utilisar IIS,apache,node
+
+Está incluso no projeto um pacote "http-server" para utilizar com Nodejs
+
+Com o NodeJs instalado, basta apenas rodar o comando ```npm start```
+

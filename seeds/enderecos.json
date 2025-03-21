@@ -1,0 +1,147 @@
+{
+  "endereco": [
+    {
+      "id": "e3f4c6a2-9e3b-4d76-bd8c-9eec1a6d4b2d",
+      "idCliente": "b3fc7dd5-41d5-4d59-b2b4-7cda1b8d1d67",
+      "cep": "01001-000",
+      "rua": "Rua das Flores",
+      "bairro": "Centro",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "d45a1b2e-04e1-4d5c-85b0-4d27b7f0cdd4",
+      "idCliente": "cd4b4b8f-49ad-4876-8f12-56db3a45d2be",
+      "cep": "20031-170",
+      "rua": "Avenida Rio Branco",
+      "bairro": "Centro",
+      "cidade": "Rio de Janeiro",
+      "estado": "RJ",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "6b6c0c47-3e4a-4d61-b0c8-a2a2763e35ad",
+      "idCliente": "7051d7b4-5f3d-4e4b-81d4-3d4f874bb7c0",
+      "cep": "30140-110",
+      "rua": "Rua da Bahia",
+      "bairro": "Centro",
+      "cidade": "Belo Horizonte",
+      "estado": "MG",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "78dbfc03-73b7-4f4a-9c42-991ff836d16f",
+      "idCliente": "847b73a2-9b6c-4328-8054-2b0f7309e9f8",
+      "cep": "80010-150",
+      "rua": "Avenida Marechal Floriano Peixoto",
+      "bairro": "Centro",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "a63d0b14-4d34-4a0c-9091-2f8f9e44e2e2",
+      "idCliente": "f02d5a15-ea7d-46a7-927d-20d9b4389f94",
+      "cep": "90010-000",
+      "rua": "Rua dos Andradas",
+      "bairro": "Centro Histórico",
+      "cidade": "Porto Alegre",
+      "estado": "RS",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "e79fbd43-6e50-4a2d-bd87-9026b8909e2c",
+      "idCliente": "cb11b9ad-c1be-4d68-afe9-bb1b7e1d56f7",
+      "cep": "70040-010",
+      "rua": "Eixo Monumental",
+      "bairro": "Asa Norte",
+      "cidade": "Brasília",
+      "estado": "DF",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "d39a7fa8-91d8-40da-8be6-3724b7e3c012",
+      "idCliente": "f6252562-27e8-4a96-946e-178cf3281c7b",
+      "cep": "40020-000",
+      "rua": "Avenida Sete de Setembro",
+      "bairro": "Centro",
+      "cidade": "Salvador",
+      "estado": "BA",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "9143e1c9-614c-43d7-a107-92d048176e36",
+      "idCliente": "21791d4e-c8b0-4e8a-94b1-503b1a2b8585",
+      "cep": "50030-230",
+      "rua": "Rua do Imperador",
+      "bairro": "Santo Antônio",
+      "cidade": "Recife",
+      "estado": "PE",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "9ac55f78-1bd2-4fa7-8c42-27b3c1bca4d1",
+      "idCliente": "d9ed00e2-c4f5-4b95-96d4-07b5d7d0aab4",
+      "cep": "66010-000",
+      "rua": "Avenida Presidente Vargas",
+      "bairro": "Campina",
+      "cidade": "Belém",
+      "estado": "PA",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "3b8dbf11-c5af-4e2f-bc04-8e16a027f830",
+      "idCliente": "b6a1c423-bf94-41aa-8c88-78e5bc5740ae",
+      "cep": "01311-000",
+      "rua": "Avenida Paulista",
+      "bairro": "Bela Vista",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "5f1b9e78-930c-4827-80b2-8b7b5f42f658",
+      "idCliente": "5b2f7b7b-eae4-4268-bd91-4e7b0efb7ad5",
+      "cep": "13010-100",
+      "rua": "Rua Barão de Jaguara",
+      "bairro": "Centro",
+      "cidade": "Campinas",
+      "estado": "SP",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "7d2c92c9-6f64-4290-9cf7-5cb1d3a50ef0",
+      "idCliente": "83b7c8df-36db-42d8-a5f1-0ba43e644ad7",
+      "cep": "88010-400",
+      "rua": "Rua Felipe Schmidt",
+      "bairro": "Centro",
+      "cidade": "Florianópolis",
+      "estado": "SC",
+      "pais": "Brasil",
+      "principal": true
+    },
+    {
+      "id": "bbd2cc5e-60bc-4c4d-8e7b-0b3d6c41f9e6",
+      "idCliente": "83b7c8df-36db-42d8-a5f1-0ba43e644ad7",
+      "cep": "89010-000",
+      "rua": "Rua XV de Novembro",
+      "bairro": "Centro",
+      "cidade": "Blumenau",
+      "estado": "SC",
+      "pais": "Brasil",
+      "principal": false
+    }
+  ]
+}
