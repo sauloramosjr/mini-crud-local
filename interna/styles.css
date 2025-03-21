@@ -37,9 +37,9 @@ tr {
   &:hover {
     background: var(--azul-background);
   }
-  &:nth-child(2n) {
+  /* &:nth-child(2n) {
     background: silver;
-  }
+  } */
 }
 
 #modal {

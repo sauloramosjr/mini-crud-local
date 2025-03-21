@@ -10,7 +10,7 @@ if (!usuarioLogado.length) {
   window.location.href = '/';
 }
 
-function criaCampos(campoEndereco, fnOnChange,value) {
+function criaCampos(campoEndereco, fnOnChange, value) {
   const wrapCampo = document.createElement('div');
   const labelCampo = document.createElement('label');
   const inputCampo = document.createElement('input');
@@ -23,7 +23,7 @@ function criaCampos(campoEndereco, fnOnChange,value) {
   inputCampo.addEventListener('change', (e) => {
     fnOnChange(e.target.value);
   });
-  !!value && (inputCampo.value = value)
+  !!value && (inputCampo.value = value);
   wrapCampo.classList.add('mb-1');
   wrapCampo.append(labelCampo);
   wrapCampo.append(inputCampo);
@@ -44,14 +44,14 @@ $(document).ready(function () {
   function listarClientesNaTabela() {
     const clientes = clienteRepository.consultarTodos();
     const enderecos = enderecoRepository.consultarTodos();
-  
+
     const clientesComEnderecos = clientes.map((cliente) => {
       cliente.enderecos = enderecos.filter(
         (endereco) => endereco.idCliente === cliente.id
       );
       return cliente;
     });
-  
+
     const tableBody = listarEmTabela(
       '#body-tabela-clientes',
       clientesComEnderecos,
@@ -59,21 +59,26 @@ $(document).ready(function () {
     );
     $('#tabela-clientes').append(tableBody);
   }
-  function resetarFormulario() {
+  function resetarFormulario(isEditar) {
     enderecos = [];
     Object.keys(cliente).forEach((e) => {
       $(`#${e}`).val('');
       cliente[e] = '';
     });
-    $('#enderecos').empty();
+    if(isEditar){
+
+      $('#enderecos').empty();
+      $("#modal").toggleClass("show")
+      $("#tabela-clientes tbody").empty()
+      listarClientesNaTabela()
+    }
     renderizaFormEnderecos();
   }
-  function enviarFormulario(_id) {
+  function enviarFormulario(editar) {
     const idCliente = !!cliente.id ? cliente.id : gerarGUID();
-    cliente.id = idCliente;
     let hasErro = false;
     Object.keys(cliente).forEach((c) => {
-      if (hasErro ) {
+      if (hasErro || !c.id) {
         return;
       }
       if (!cliente[c]) {
@@ -88,31 +93,30 @@ $(document).ready(function () {
       window.alert('Cliente já existe!');
       return;
     }
-    if(cliente.id){
-
+    if (cliente.id) {
       clienteRepository.atualizar({ objeto: cliente });
+      enderecoRepository.excluirTodosDoCliente({ id: cliente.id });
       enderecos.forEach((e) => {
         const end = e;
-        console.log(e)
-        end.idCliente = idCliente;
-        enderecoRepository.atualizar({ objeto: end });
+        end.id = gerarGUID();
+        end.idCliente = cliente.id;
+        enderecoRepository.novo({ objeto: end });
       });
-    }else{
-
+    } else {
+      cliente.id = idCliente;
       clienteRepository.novo({ objeto: cliente });
       enderecos.forEach((e) => {
         const end = e;
-        end.id =  gerarGUID()
+        end.id = gerarGUID();
         end.idCliente = idCliente;
-        enderecoRepository.novo({ objeto: e });
+        enderecoRepository.novo({ objeto: end });
       });
     }
-
 
     window.alert(
       `Cliente ${cliente.nomeCompleto.split(' ')[0]} salvo com sucesso`
     );
-    resetarFormulario();
+    resetarFormulario(editar);
   }
   function renderizaFormEnderecos() {
     const enderecoKeys = Object.keys(endereco);
@@ -124,8 +128,10 @@ $(document).ready(function () {
       }
 
       const wrapCampo = criaCampos(campoEndereco, (value) => {
+        if (!enderecos.length) {
+          enderecos.push(new Endereco());
+        }
         enderecos[enderecos.length - 1][campoEndereco] = value;
-        console.log(enderecos);
       });
       _wrap.append(wrapCampo);
     });
@@ -134,57 +140,57 @@ $(document).ready(function () {
     $('#enderecos').append(_wrap);
   }
   function renderizaFormEnderecosEditar(_enderecos) {
-    _enderecos.forEach(end=>{
-
+    _enderecos.forEach((end) => {
       const enderecoKeys = Object.keys(endereco);
       const _wrap = document.createElement('div');
 
-    enderecoKeys.forEach((campoEndereco) => {
-      if (campoEndereco == 'idCliente' || campoEndereco == 'id') {
-        return;
-      }
+      enderecoKeys.forEach((campoEndereco) => {
+        if (campoEndereco == 'idCliente' || campoEndereco == 'id') {
+          return;
+        }
 
-      const wrapCampo = criaCampos(campoEndereco, (value) => {
-        end[campoEndereco] = value;
-        console.log(enderecos);
-      },enderecos[enderecos.length - 1][campoEndereco]);
-      _wrap.append(wrapCampo);
+        const wrapCampo = criaCampos(
+          campoEndereco,
+          (value) => {
+            end[campoEndereco] = value;
+          },
+          enderecos[enderecos.length - 1][campoEndereco]
+        );
+        _wrap.append(wrapCampo);
+      });
+      _wrap.id = 'wrap';
+
+      $('#enderecos').append(_wrap);
     });
-    _wrap.id = 'wrap';
-
-    $('#enderecos').append(_wrap);
-    })
   }
 
-  function editarCliente(_cliente,_enderecos) {
+  function editarCliente(_cliente, _enderecos) {
+    Object.keys(_cliente).forEach((e) => {
+      cliente[e] = _cliente[e];
+    });
+    enderecos = _cliente['enderecos'];
+    $('#enderecos').empty();
 
-    Object.keys(_cliente).forEach(e=>{
-      console.log(e,cliente[e] , _cliente[e])
-      cliente[e] = _cliente[e]
-    })
-    enderecos = _cliente['enderecos']
-    $('#enderecos').empty()
+    $('#nomeCompleto').val(cliente.nomeCompleto);
+    $('#celular').val(cliente.celular);
+    $('#cpf').val(cliente.cpf);
+    $('#dataNascimento').val(cliente.dataNascimento);
+    $('#telefone').val(cliente.telefone);
 
-    $('#nomeCompleto').val(cliente.nomeCompleto)
-    $('#celular').val(cliente.celular)
-    $('#cpf').val(cliente.cpf)
-    $('#dataNascimento').val(cliente.dataNascimento)
-    $('#telefone').val(cliente.telefone)
-    
-    renderizaFormEnderecosEditar(enderecos)
-      $('#tituloFormulario').text('Editar Cliente');
-      $('#modal').toggleClass('show');
+    renderizaFormEnderecosEditar(enderecos);
+    $('#tituloFormulario').text('Editar Cliente');
+    $('#modal').toggleClass('show');
   }
 
   function listarEmTabela(idTagPai, arrayEntidades, fnExcluir) {
     const bodyTable = document.createElement('tbody');
-  
+
     arrayEntidades.forEach((entidade) => {
       const linha = document.createElement('tr');
       linha.role = 'button';
-  
+
       let appendAberto = false;
-  
+
       linha.addEventListener('click', () => {
         appendAberto = !appendAberto;
         const appendRow = linha.nextSibling;
@@ -192,25 +198,23 @@ $(document).ready(function () {
           appendRow.style.display = appendAberto ? '' : 'none';
         }
       });
-  
+
       const editar = document.createElement('td');
       editar.innerHTML = `<button class="btn"><span class="material-symbols-outlined">edit</span></button>`;
       linha.append(editar);
-  
-      editar.addEventListener('click',(e) => {
-        e.stopPropagation()
-        editarCliente(entidade)
+
+      editar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editarCliente(entidade);
       });
-  
+
       Object.keys(entidade).forEach((key) => {
         if (key === 'id' || key === 'enderecos') return;
         const celula = document.createElement('td');
         celula.innerText = entidade[key];
         linha.append(celula);
       });
-  
-      
-  
+
       const deletar = document.createElement('td');
       const btnExcluir = document.createElement('button');
       btnExcluir.classList.add('btn');
@@ -221,24 +225,24 @@ $(document).ready(function () {
       });
       deletar.append(btnExcluir);
       linha.append(deletar);
-  
+
       bodyTable.append(linha);
-  
+
       if (entidade.enderecos && entidade.enderecos.length > 0) {
         const linhaAppend = document.createElement('tr');
         linhaAppend.classList.add('append-wrapper');
         linhaAppend.style.display = 'none';
-  
+
         const celulaAppend = document.createElement('td');
         celulaAppend.colSpan = Object.keys(entidade).length + 1;
-  
+
         const tabelaEnderecos = document.createElement('table');
         tabelaEnderecos.classList.add('table', 'table-bordered', 'table-sm');
-  
+
         const thead = document.createElement('thead');
         const _end = new Endereco();
         const enderecoKeys = Object.keys(_end);
-  
+
         const campos = `<tr><td colSpan="${
           Object.keys(entidade).length + 1
         }"><h2>Endereço</h2></td></tr><th>${enderecoKeys
@@ -246,12 +250,11 @@ $(document).ready(function () {
             return _endereco != 'id' && _endereco != 'idCliente';
           })
           .join('</th><th>')}</th>`;
-        console.log(campos);
         thead.innerHTML = campos;
         tabelaEnderecos.append(thead);
-  
+
         const tbody = document.createElement('tbody');
-  
+
         entidade.enderecos.forEach((endereco) => {
           const linhaEndereco = document.createElement('tr');
           enderecoKeys.forEach((campo) => {
@@ -269,22 +272,20 @@ $(document).ready(function () {
             celula.innerText = valor || '';
             linhaEndereco.append(celula);
           });
-  
+
           tbody.append(linhaEndereco);
         });
-  
+
         tabelaEnderecos.append(tbody);
         celulaAppend.append(tabelaEnderecos);
         linhaAppend.append(celulaAppend);
-  
+
         bodyTable.append(linhaAppend);
       }
     });
-  
+
     return bodyTable;
   }
-
-  
 
   listarClientesNaTabela();
   renderizaFormEnderecos();
@@ -308,7 +309,6 @@ $(document).ready(function () {
     $('#tituloFormulario').text('Novo Cliente');
     $('#modal').toggleClass('show');
   });
-  
 
   $('#exportar-banco').click(() => {
     exportDataBase();
@@ -327,7 +327,6 @@ $(document).ready(function () {
   });
   $('#nomeCompleto').on('keyup', (e) => {
     cliente.nomeCompleto = e.target.value;
-    console.log(cliente);
   });
   $('#cpf').on('keyup', (e) => {
     cliente.cpf = e.target.value;
@@ -345,18 +344,11 @@ $(document).ready(function () {
     resetarFormulario();
   });
   $('#enviar').click(() => {
-    enviarFormulario();
+    const titulo = $('#tituloFormulario').text();
+    const isEditar = titulo == 'Editar Cliente'
+    enviarFormulario(isEditar);
   });
-
-
 });
-
-
-
-
-
-
-
 
 function exportDataBase() {
   const resultado = {};

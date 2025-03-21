@@ -4,7 +4,7 @@ import { valuesStringFromObject } from '../utils/valuesStringFromObject.js';
 export class BaseRepository {
   constructor(tabela) {
     this.tabela = tabela;
-    criarBancoETabelas()
+    criarBancoETabelas();
   }
 
   novo({ objeto }) {
@@ -41,11 +41,11 @@ export class BaseRepository {
   atualizar({ objeto }) {
     const { id, ...dados } = objeto; // Extrai o ID e mantém o restante dos campos
     const campos = Object.keys(dados)
-      .map(campo => `${campo} = "${dados[campo]}"`)
-      .join(", ");
-  
+      .map((campo) => `${campo} = "${dados[campo]}"`)
+      .join(', ');
+
     const query = `UPDATE ${this.tabela} SET ${campos} WHERE id = "${id}";`;
-  console.log(query)
+    console.log(query);
     try {
       alasql(query);
     } catch (err) {

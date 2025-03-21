@@ -5,7 +5,6 @@ export function clienteJaExiste(cliente) {
   const query = `SELECT * FROM cliente WHERE cpf = "${cliente.cpf}";`;
   const res = alasql(query);
   if (res.length > 0) {
-    console.log(res);
     return true;
   }
   return false;

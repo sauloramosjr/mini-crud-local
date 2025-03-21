@@ -21,7 +21,6 @@ class UsuarioRepository extends BaseRepository {
     }
   }
   setaUsuarioLogado(usuario) {
-    console.log(usuario)
     const query = `UPDATE usuario SET logado = ${usuario.logado} WHERE email = "${usuario.email}";`;
     try {
       return alasql(query);

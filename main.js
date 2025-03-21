@@ -57,6 +57,8 @@ $(document).ready(function () {
         try {
           const jsonDataBase = JSON.parse(e.target.result);
           jsonToDataBase(jsonDataBase);
+          window.alert("Banco importado com sucesso!")
+          $('#modal').toggleClass('show');
         } catch (error) {
           console.error('Erro ao parsear o JSON:', error);
         }
@@ -76,7 +78,6 @@ $(document).ready(function () {
 
   $('#btn-enviar').click((event) => {
     if (!emailValido(email)) {
-      console.log('email invalido');
       return;
     }
     if(usuarioJaExiste({ email })){
@@ -86,6 +87,13 @@ $(document).ready(function () {
       const usuario = new Usuario(email, senha, nome);
       usuario.id = gerarGUID();
       usuarioRepository.novo({ objeto: usuario });
+      window.alert("Usuario cadastrado com sucesso")
+      nome = '';
+      email = '';
+      senha = '';
+      $('.flip-card-inner').toggleClass('active');
+      $('.flip-card-back').toggleClass('active');
+      $('.flip-card-back').addClass('voltar');
   });
 
   $('#configuracao').click(function () {
@@ -117,7 +125,6 @@ function jsonToDataBase(_json) {
       for (let validation of validations) {
         if (itemKeys.some((e) => e == validation.seletor)) {
           const invalid = validation.fn(item);
-          console.log(invalid);
           if (invalid) {
             return;
           }
