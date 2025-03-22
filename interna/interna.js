@@ -10,15 +10,63 @@ if (!usuarioLogado.length) {
   window.location.href = '/';
 }
 
-function criaCampos(campoEndereco, fnOnChange, value) {
+function criaCampoInputsBoolean(campo, fnOnChange, value) {
+  const wrapCampo = document.createElement('div');
+  wrapCampo.classList.add("form-check", "form-switch", "mb-1");
+
+  const inputCampo = document.createElement('input');
+  inputCampo.type = 'checkbox';
+  inputCampo.role = 'switch';
+  inputCampo.id = campo;
+  inputCampo.classList.add("form-check-input");
+
+  // Se 'value' é "true", o checkbox deve estar marcado
+  inputCampo.checked = value === "true";
+
+  inputCampo.addEventListener('change', function(e) {
+    const arrayCheckboxeses = Array.from(document.querySelectorAll('input[type="checkbox"]'))
+    const checkboxses = arrayCheckboxeses.some(checkbox => {
+      return checkbox.checked === true;
+    });
+    if(arrayCheckboxeses.length == 1 || !checkboxses){
+      arrayCheckboxeses[0].checked = true;
+      arrayCheckboxeses[0].click(); 
+      fnOnChange(e.target.checked); 
+      return
+    }
+    if (e.target.checked) {
+      // Desmarca todos os outros checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        if (checkbox !== e.target) {
+          checkbox.checked = false;
+          checkbox.click()
+        }
+      });
+ 
+    }
+    fnOnChange(e.target.checked); // Chama a função de callback passando o novo estado
+  });
+
+  const labelCampo = document.createElement('label');
+  labelCampo.htmlFor = campo;
+  labelCampo.classList.add("form-check-label", "form-label");
+  labelCampo.innerText = campo.charAt(0).toUpperCase() + campo.slice(1);
+
+  wrapCampo.append(labelCampo);
+  wrapCampo.append(inputCampo);
+
+  return wrapCampo;
+}
+
+
+function criaCampoInputsTexto(campo, fnOnChange, value) {
   const wrapCampo = document.createElement('div');
   const labelCampo = document.createElement('label');
   const inputCampo = document.createElement('input');
-  labelCampo.htmlFor = campoEndereco;
-  labelCampo.innerText =
-    campoEndereco.charAt(0).toUpperCase() + campoEndereco.slice(1);
+  labelCampo.htmlFor = campo;
+  labelCampo.innerText = campo.charAt(0).toUpperCase() + campo.slice(1);
   labelCampo.classList.add('form-label');
-  inputCampo.id = campoEndereco;
+  inputCampo.id = campo;
   inputCampo.classList.add('form-control');
   inputCampo.addEventListener('change', (e) => {
     fnOnChange(e.target.value);
@@ -65,14 +113,13 @@ $(document).ready(function () {
       $(`#${e}`).val('');
       cliente[e] = '';
     });
-    if(isEditar){
-
+    if (isEditar) {
       $('#enderecos').empty();
-      $("#modal").toggleClass("show")
-      $("#tabela-clientes tbody").empty()
-      listarClientesNaTabela()
+      $('#modal').toggleClass('show');
+      $('#tabela-clientes tbody').empty();
+      // listarClientesNaTabela()
     }
-    renderizaFormEnderecos();
+    renderizaFormEnderecos(enderecos);
   }
   function enviarFormulario(editar) {
     const idCliente = !!cliente.id ? cliente.id : gerarGUID();
@@ -118,29 +165,34 @@ $(document).ready(function () {
     );
     resetarFormulario(editar);
   }
-  function renderizaFormEnderecos() {
-    const enderecoKeys = Object.keys(endereco);
-    const _wrap = document.createElement('div');
+  // function renderizaFormEnderecos() {
+  //   const enderecoKeys = Object.keys(endereco);
+  //   const _wrap = document.createElement('div');
 
-    enderecoKeys.forEach((campoEndereco) => {
-      if (campoEndereco == 'idCliente' || campoEndereco == 'id') {
-        return;
-      }
+  //   enderecoKeys.forEach((campoEndereco) => {
+  //     if (campoEndereco == 'idCliente' || campoEndereco == 'id') {
+  //       return;
+  //     }
 
-      const wrapCampo = criaCampos(campoEndereco, (value) => {
-        if (!enderecos.length) {
-          enderecos.push(new Endereco());
-        }
-        enderecos[enderecos.length - 1][campoEndereco] = value;
-      });
-      _wrap.append(wrapCampo);
-    });
-    _wrap.id = 'wrap';
+  //     const wrapCampo = criaCampo(campoEndereco, (value) => {
+  //       if (!enderecos.length) {
+  //         enderecos.push(new Endereco());
+  //       }
+  //       enderecos[enderecos.length - 1][campoEndereco] = value;
+  //     });
+  //     _wrap.append(wrapCampo);
+  //   });
+  //   _wrap.id = 'wrap';
 
-    $('#enderecos').append(_wrap);
-  }
-  function renderizaFormEnderecosEditar(_enderecos) {
-    _enderecos.forEach((end) => {
+  //   $('#enderecos').append(_wrap);
+  // }
+  function renderizaFormEnderecos(_enderecos) {
+    let ends = _enderecos;
+    if (!_enderecos.length) {
+      ends = [new Endereco()];
+    }
+    $('#enderecos').empty();
+    ends.forEach((end, i) => {
       const enderecoKeys = Object.keys(endereco);
       const _wrap = document.createElement('div');
 
@@ -148,18 +200,48 @@ $(document).ready(function () {
         if (campoEndereco == 'idCliente' || campoEndereco == 'id') {
           return;
         }
-
-        const wrapCampo = criaCampos(
-          campoEndereco,
-          (value) => {
-            end[campoEndereco] = value;
-          },
-          enderecos[enderecos.length - 1][campoEndereco]
-        );
+        let wrapCampo;
+        if (campoEndereco == 'principal') {
+          wrapCampo = criaCampoInputsBoolean(
+            campoEndereco,
+            (value) => {
+              end[campoEndereco] = value;
+            },
+            ends[i][campoEndereco]
+          );
+        } else {
+          wrapCampo = criaCampoInputsTexto(
+            campoEndereco,
+            (value) => {
+              end[campoEndereco] = value;
+            },
+            ends[i][campoEndereco]
+          );
+        }
         _wrap.append(wrapCampo);
       });
       _wrap.id = 'wrap';
+      _wrap.style.position = 'relative';
+      _wrap.style.marginTop = '10px';
+      _wrap.style.paddingTop = '20px';
+      const buttonDeletar = document.createElement('button');
+      buttonDeletar.classList.add('btn');
+      buttonDeletar.innerHTML = `<span style="color:red;" class="material-symbols-outlined">delete</span>`;
+      buttonDeletar.style = 'position:absolute; top:0px; right:0px;';
 
+      const fnDeletarEndereco = () => {
+        if (enderecos.length == 1) {
+          return;
+        }
+        enderecoRepository.deletar({ id: end.id });
+        enderecos = enderecos.filter((e, i) => i != enderecos.indexOf(end));
+        renderizaFormEnderecos(enderecos);
+      };
+      buttonDeletar.addEventListener('click', fnDeletarEndereco);
+
+      if (enderecos.length > 1) {
+        _wrap.appendChild(buttonDeletar);
+      }
       $('#enderecos').append(_wrap);
     });
   }
@@ -177,9 +259,9 @@ $(document).ready(function () {
     $('#dataNascimento').val(cliente.dataNascimento);
     $('#telefone').val(cliente.telefone);
 
-    renderizaFormEnderecosEditar(enderecos);
+    renderizaFormEnderecos(enderecos);
     $('#tituloFormulario').text('Editar Cliente');
-    $('#modal').toggleClass('show');
+    $('#toggleNovo').click();
   }
 
   function listarEmTabela(idTagPai, arrayEntidades, fnExcluir) {
@@ -288,15 +370,17 @@ $(document).ready(function () {
   }
 
   listarClientesNaTabela();
-  renderizaFormEnderecos();
+  renderizaFormEnderecos(enderecos);
 
+  const exampleModal = document.querySelector('#exampleModal');
+
+  exampleModal.addEventListener('hidden.bs.modal', () => {
+    $('#tabela-clientes tbody').empty();
+    listarClientesNaTabela();
+  });
   $('#add-endereco').click((e) => {
     enderecos.push(new Endereco());
-    renderizaFormEnderecos();
-  });
-  $('#remove-endereco').click((e) => {
-    enderecos.pop();
-    $('#enderecos').children().last().remove();
+    renderizaFormEnderecos(enderecos);
   });
 
   $('#sair').click(() => {
@@ -306,8 +390,9 @@ $(document).ready(function () {
   });
 
   $('#novo').click(() => {
+    resetarFormulario();
     $('#tituloFormulario').text('Novo Cliente');
-    $('#modal').toggleClass('show');
+    $('#toggleNovo').click();
   });
 
   $('#exportar-banco').click(() => {
@@ -315,11 +400,10 @@ $(document).ready(function () {
   });
 
   $('#closeButon, #modal').click(() => {
-    $('#modal').toggleClass('show');
-    if (!$('#modal').hasClass('show')) {
-      $('#tabela-clientes tbody').empty();
-      listarClientesNaTabela();
-    }
+    $('#toggleNovo').click();
+
+    $('#tabela-clientes tbody').empty();
+    listarClientesNaTabela();
   });
 
   $('#client-card').click((e) => {
@@ -345,8 +429,13 @@ $(document).ready(function () {
   });
   $('#enviar').click(() => {
     const titulo = $('#tituloFormulario').text();
-    const isEditar = titulo == 'Editar Cliente'
+    const isEditar = titulo == 'Editar Cliente';
     enviarFormulario(isEditar);
+    $('#tabela-clientes tbody').empty();
+    listarClientesNaTabela();
+    if (isEditar) {
+      $('#toggleNovo').click();
+    }
   });
 });
 

@@ -28,7 +28,7 @@
 
 <body>
     <main>
-        <div class="d-flex justify-content-between p-2">
+        <div id="buttons"class="d-flex justify-content-between p-2">
             <button id="novo" class="btn btn-primary">novo</button>
             <button id="exportar-banco" class="btn btn-secondary">Exportar Banco</button>
             <button id="sair" class="btn btn-secondary">sair</button>
@@ -48,67 +48,77 @@
             </thead>
            
         </table>
+        <button id="toggleNovo" type="button" style="display:none;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+          </button>
+          
+          <!-- Modal --> 
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div id="client-card" class="card">
+                    <div class="text-center">
+                        <h3 id="tituloFormulario"></h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="closeButon" class="btn btn-secundary">
+                            <span style="pointer-events:none;" class="material-symbols-outlined">
+                                Close
+                            </span>
+                        </div>
+        
+                        <div class="mb-1">
+                            <div class="mb-1">
+                                <label for="nome" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control" id="nomeCompleto" required>
+                            </div>
+                            <div class="d-flex gap-3">
+        
+                                <div class="mb-1">
+                                    <label for="cpf" class="form-label">CPF</label>
+                                    <input type="text" class="form-control" id="cpf" required>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="dataNascimento" required>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3">
+        
+                                <div class="mb-1">
+                                    <label for="telefone" class="form-label">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone" required>
+                                </div>
+                                <div class="mb-1">
+                                    <label for="celular" class="form-label">Celular</label>
+                                    <input type="text" class="form-control" id="celular" required>
+                                </div>
+                            </div>
+                            <div>
+        
+                                <div style="display: flex;">
+                                    <button id="add-endereco" class="btn btn-primary d-flex justify-content-center">Endereço <span class="material-symbols-outlined">add</span></button>
+                                </div>
+                                
+                                
+                                <div id="enderecos">
+                                    
+                                </div>
+                                
+                                <div class="d-flex g-4">
+                                    <button id="enviar" class="btn btn-primary d-flex justify-content-center">Enviar <span class="material-symbols-outlined">send</span></button>
+                                    <button id="limpar" class="btn btn-danger d-flex justify-content-center">Limpar <span class="material-symbols-outlined">delete</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
     </main>
-    <div id="modal">
-        <div id="client-card" class="card">
-            <div class="text-center">
-                <h3 id="tituloFormulario"></h3>
-            </div>
-            <div class="card-body">
-                <div id="closeButon" class="btn btn-secundary">
-                    <span style="pointer-events:none;" class="material-symbols-outlined">
-                        Close
-                    </span>
-                </div>
-
-                <div class="mb-1">
-                    <div class="mb-1">
-                        <label for="nome" class="form-label">Nome Completo</label>
-                        <input type="text" class="form-control" id="nomeCompleto" required>
-                    </div>
-                    <div class="d-flex gap-3">
-
-                        <div class="mb-1">
-                            <label for="cpf" class="form-label">CPF</label>
-                            <input type="text" class="form-control" id="cpf" required>
-                        </div>
-                        <div class="mb-1">
-                            <label for="dataNascimento" class="form-label">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento" required>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-3">
-
-                        <div class="mb-1">
-                            <label for="telefone" class="form-label">Telefone</label>
-                            <input type="text" class="form-control" id="telefone" required>
-                        </div>
-                        <div class="mb-1">
-                            <label for="celular" class="form-label">Celular</label>
-                            <input type="text" class="form-control" id="celular" required>
-                        </div>
-                    </div>
-                    <div>
-
-                        <div style="display: flex;">
-                            <button id="add-endereco" class="btn btn-primary d-flex justify-content-center">Endereço <span class="material-symbols-outlined">add</span></button>
-                            <button id="remove-endereco" class="btn btn-danger d-flex justify-content-center">Endereço <span class="material-symbols-outlined">remove</span></button>
-                        </div>
-                        
-                        
-                        <div id="enderecos">
-                            
-                        </div>
-                        
-                        <div class="d-flex g-4">
-                            <button id="enviar" class="btn btn-primary d-flex justify-content-center">Enviar <span class="material-symbols-outlined">send</span></button>
-                            <button id="limpar" class="btn btn-danger d-flex justify-content-center">Limpar <span class="material-symbols-outlined">delete</span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+  
 
     </div>
 </body>

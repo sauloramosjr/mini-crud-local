@@ -45,7 +45,6 @@ export class BaseRepository {
       .join(', ');
 
     const query = `UPDATE ${this.tabela} SET ${campos} WHERE id = "${id}";`;
-    console.log(query);
     try {
       alasql(query);
     } catch (err) {
