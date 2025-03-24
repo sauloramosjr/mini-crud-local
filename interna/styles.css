@@ -35,7 +35,10 @@ tr {
   /* display: grid;
   grid-template-rows: 0fr; */
   &:hover {
-    background: var(--azul-background);
+    td{
+
+      background: var(--azul-background)!important;
+    }
   }
   /* &:nth-child(2n) {
     background: silver;

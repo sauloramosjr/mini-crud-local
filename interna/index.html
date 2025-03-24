@@ -34,9 +34,11 @@
             <button id="sair" class="btn btn-secondary">sair</button>
 
         </div>
-        <table id="tabela-clientes">
-            <thead >
-                <tr>
+        <div class="table-responsive">
+            <h2 class="text-center mb-4">Clientes</h2>
+            <table id="tabela-clientes" class="table table-bordered table-striped">
+                <thead >
+                    <tr>
                     <th scope="col"></th>
                     <th scope="col">Nome Completo</th>
                     <th scope="col">CPF</th>
@@ -46,8 +48,9 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
-           
+            
         </table>
+    </div>
         <button id="toggleNovo" type="button" style="display:none;" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Launch demo modal
           </button>
