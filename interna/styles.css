@@ -34,8 +34,8 @@ td {
 tr {
   /* display: grid;
   grid-template-rows: 0fr; */
-  &:hover {
-    td{
+  &[role=button]:hover, & table tbody tr:hover {
+     td{
 
       background: var(--azul-background)!important;
     }
